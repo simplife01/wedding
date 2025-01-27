@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ZH-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Pokemon Magazine</title>
+</head>
+
+<body>
+  <div class="flipbook">
+    <div class="hard">My Pokemon Gallery <small>~ HankTheTank</small></div>
+    <div class="hard"></div>
+    <div class="page">
+      <small>Lets Look At Some Amazing Pokemon ❤️</small>
+      <small>Gotta Catch 'Em All</small>
+    </div>
+    <div class="page">
+      <img src="images/img-1.png" alt="Charmandar" />
+      <small> Charmandar </small>
+    </div>
+    <div class="page">
+      <img src="images/img-2.png" alt="Arbok" />
+      <small> Arbok </small>
+    </div>
+    <div class="page">
+      <img src="images/img-3.png" alt="Pikachu" />
+      <small> Pikachu </small>
+    </div>
+    <div class="page">
+      <img src="images/img-4.png" alt="Mew" />
+      <small> Mew </small>
+    </div>
+    <div class="page">
+      <img src="images/img-5.png" alt="Darkrai" />
+      <small> Darkrai </small>
+    </div>
+    <div class="hard"></div>
+    <div class="hard">Thank You <small>~ HankTheTank</small></div>
+  </div>
+
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".flipbook").turn({
+        width: "80%",
+        height: "70%",
+        autoCenter: true
+      });
+    });
+  </script>
+</body>
+
+</html>
