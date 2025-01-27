@@ -39,6 +39,10 @@
     <div class="hard"></div>
     <div class="hard">Thank You <small>~ HankTheTank</small></div>
   </div>
+  <div id="landscape-notice">
+    請將裝置旋轉到橫向以獲得最佳體驗。
+  </div>
+  
 
   <script src="jquery.js"></script>
   <script src="turn.js"></script>
@@ -50,6 +54,16 @@
         autoCenter: true
       });
     });
+    function checkOrientation() {
+      if (window.innerWidth < window.innerHeight) {
+        document.getElementById("landscape-notice").style.display = "flex";
+      } else {
+        document.getElementById("landscape-notice").style.display = "none";
+      }
+    }
+
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("load", checkOrientation);
   </script>
 </body>
 
