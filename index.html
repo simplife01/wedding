@@ -39,32 +39,64 @@
     <div class="hard"></div>
     <div class="hard">Thank You <small>~ HankTheTank</small></div>
   </div>
-  <div id="landscape-notice">
-    請將裝置旋轉到橫向以獲得最佳體驗。
-  </div>
+  <div class="landscape-notice">請將裝置旋轉到橫向以獲得最佳體驗.</div>
+
   
 
   <script src="jquery.js"></script>
   <script src="turn.js"></script>
   <script>
-    $(document).ready(function () {
-      $(".flipbook").turn({
-        width: "80%",
-        height: "70%",
-        autoCenter: true
+    function adjustImageSize() {
+      const images = document.querySelectorAll(".page img");
+      const flipbook = document.querySelector(".flipbook");
+      const maxImageWidth = flipbook.offsetWidth * 0.7; // 設定最大寬度為 flipbook 的 70%
+
+      images.forEach((img) => {
+        img.style.maxWidth = `${maxImageWidth}px`;
+        img.style.height = "auto"; // 確保比例正確
       });
-    });
-    function checkOrientation() {
-      if (window.innerWidth < window.innerHeight) {
-        document.getElementById("landscape-notice").style.display = "flex";
-      } else {
-        document.getElementById("landscape-notice").style.display = "none";
-      }
     }
 
-    window.addEventListener("resize", checkOrientation);
-    window.addEventListener("load", checkOrientation);
+    function adjustFlipbookSize() {
+      const flipbook = document.querySelector(".flipbook");
+      const notice = document.querySelector(".landscape-notice"); // 遮罩元素
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const aspectRatio = 1000 / 600; // 原始比例寬高
+
+      if (screenWidth > screenHeight) {
+        // 橫屏模式
+        notice.style.display = "none"; // 隱藏提示
+        flipbook.style.width = `${screenHeight * 0.9 * aspectRatio}px`;
+        flipbook.style.height = `${screenHeight * 0.9}px`;
+      } else {
+        // 直屏模式
+        notice.style.display = "flex"; // 顯示提示
+        flipbook.style.width = `${screenWidth * 0.9}px`;
+        flipbook.style.height = `${screenWidth * 0.9 / aspectRatio}px`;
+      }
+
+      // 重新初始化翻頁功能
+      if ($(".flipbook").data("initialized")) {
+        $(".flipbook").turn("size", flipbook.offsetWidth, flipbook.offsetHeight);
+      } else {
+        $(".flipbook").turn({
+          width: flipbook.offsetWidth,
+          height: flipbook.offsetHeight,
+        });
+        $(".flipbook").data("initialized", true);
+      }
+
+      // 調整圖片大小
+      adjustImageSize();
+    }
+
+    // 初始化遮罩和翻頁功能
+    window.addEventListener("resize", adjustFlipbookSize);
+    window.addEventListener("orientationchange", adjustFlipbookSize);
+    adjustFlipbookSize();
   </script>
+  
 </body>
 
 </html>
