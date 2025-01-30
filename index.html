@@ -67,39 +67,34 @@
       const notice = document.querySelector(".landscape-notice"); // 遮罩元素
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
-      const aspectRatio = 800 / 600; // 原始比例寬高
+      const aspectRatio = 5 / 3; // 書本原始寬高比例 (5:3)
 
-      if (screenWidth > screenHeight) {
-        // 橫屏模式
-        notice.style.display = "none"; // 隱藏提示
-        flipbook.style.width = `${screenHeight * 0.9 * aspectRatio}px`;
-        flipbook.style.height = `${screenHeight * 0.72}px`;
-      } else {
-        // 直屏模式
-        notice.style.display = "flex"; // 顯示提示
-        flipbook.style.width = `${screenWidth * 0.9}px`;
-        flipbook.style.height = `${screenWidth * 0.72 / aspectRatio}px`;
+      if (screenWidth > screenHeight) { // 橫向模式
+          notice.style.display = "none"; // 隱藏旋轉提示
+          flipbook.style.height = `${screenHeight}px`; // 高度填滿螢幕
+          flipbook.style.width = `${screenHeight * aspectRatio}px`; // 根據 5:3 比例調整寬度
+      } else { // 直立模式
+          notice.style.display = "flex"; // 顯示旋轉提示
+          flipbook.style.width = `${screenWidth * 0.9}px`; // 寬度為螢幕的 90%
+          flipbook.style.height = `${(screenWidth * 0.9) / aspectRatio}px`; // 按照 5:3 調整高度
       }
 
-      // 重新初始化翻頁功能
+      // 重新設定翻頁效果
       if ($(".flipbook").data("initialized")) {
-        $(".flipbook").turn("size", flipbook.offsetWidth, flipbook.offsetHeight);
+          $(".flipbook").turn("size", flipbook.offsetWidth, flipbook.offsetHeight);
       } else {
-        $(".flipbook").turn({
-          width: flipbook.offsetWidth,
-          height: flipbook.offsetHeight,
-        });
-        $(".flipbook").data("initialized", true);
+          $(".flipbook").turn({
+              width: flipbook.offsetWidth,
+              height: flipbook.offsetHeight,
+          });
+          $(".flipbook").data("initialized", true);
       }
-
-      // 調整圖片大小
-      adjustImageSize();
     }
 
-    // 初始化遮罩和翻頁功能
+    // 監聽螢幕大小變化 & 初始執行
     window.addEventListener("resize", adjustFlipbookSize);
     window.addEventListener("orientationchange", adjustFlipbookSize);
-    adjustFlipbookSize();
+    window.addEventListener("load", adjustFlipbookSize);
   </script>
   
 </body>
